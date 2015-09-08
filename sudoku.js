@@ -81,10 +81,44 @@ function parseGrid(grid){
     }  
     return values;
 }
+/* Values is an object. that looks like this:
 
+    {
+    A1:"123456789"
+    ...
+    B@:"12",
+    C1:"1279",
+    }
+    
+    s= "A1", square to reduce,
+    d= "5" The number you're going to eliminate from that square.
 
+*/
+var counter = 0;
 function eliminate(values,s,d){
-  // here
+  // eliminate the value d in the square s from values
+  // values, 'A1', '5'
+  // check to see if 5 in A1.
+  // replace the digit d in values[s];
+    if (!values[s].contains(d)) {
+        return values;
+    }
+    counter++:
+        // replace function below
+    
+    values[s] = values[s].replace(d,'')
+        // check the reduced values of the square
+        // to see if it's down to 1 last possibility.
+        // if the length is equal to 1, we can 
+        // eliminate that value from it's peers. then 
+        // we can assign that value to the square.
+        if (values[s].length === 1){ //peers = Example: 'A1'
+            peers[s].forEach(function(peer){
+                eliminate(values,peer,values[s]);//eliminate
+            });
+        }
+    
+    return values;
 }
 
 
@@ -93,3 +127,7 @@ function draw(values){
         document.getElementById(key).innerHTML = values[key]; 
     }
 }
+
+var x = parseGrid(puzzle);
+draw(x);
+console.log(counter);
